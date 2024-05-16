@@ -8,5 +8,7 @@ class Endpoints {
   static const String news = "$baseURL/news";
   static const String datas = "$baseURLLive/api/datas";
   static const String newscs = "$baseURL/api/customer-service/2255011003";
+  static const String division = "$baseURL/api/division-department";
+  static const String priority = "$baseURL/api/priority-issues";
 }
   

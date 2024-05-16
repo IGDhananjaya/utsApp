@@ -6,6 +6,7 @@ import 'package:dhananjaya_2255011003/dto/division.dart';
 import 'package:dhananjaya_2255011003/dto/priorities.dart';
 import 'package:dhananjaya_2255011003/endpoints/endpoints.dart';
 import 'package:dhananjaya_2255011003/services/data_service.dart';
+import 'package:dhananjaya_2255011003/utils/custom_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -35,50 +36,23 @@ class _CustomerScreenState extends State<CustomerScreen> with WidgetsBindingObse
 
   @override
   Future<bool> didPopRoute() async {
-    // Provide custom behavior here
-    return false; // Return true if you want to allow the back button press event, or false if you want to prevent it
+    return false;
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        // Provide custom behavior here
-        return false; // Return true if you want to allow the back button press event, or false if you want to prevent it
+        return false;
       },
       child: Scaffold(
         appBar: AppBar(
           title: Text("Customer Service"),
           backgroundColor: const Color.fromARGB(127, 204, 169, 141),
         ),
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                ),
-                child: Text(
-                  'Menu',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                  ),
-                ),
-              ),
-              ListTile(
-                leading: Icon(Icons.home),
-                title: Text('Home'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          ),
-        ),
+        drawer: CustomDrawer(),
         floatingActionButton: FloatingActionButton(
-          backgroundColor:const Color.fromRGBO(82, 170, 94, 1.0),
+          backgroundColor: const Color.fromRGBO(82, 170, 94, 1.0),
           tooltip: 'Add New Customer Service',
           onPressed: () {
             Navigator.push(
@@ -101,14 +75,14 @@ class _CustomerScreenState extends State<CustomerScreen> with WidgetsBindingObse
                         if (snapshot.hasData) {
                           final data = snapshot.data!;
                           return ListView.builder(
-                            shrinkWrap: true, // Wrap listview content
+                            shrinkWrap: true,
                             itemCount: data.length,
                             itemBuilder: (context, index) {
                               final item = data[index];
                               return Container(
                                 margin: EdgeInsets.symmetric(
                                   vertical: 8.0,
-                                  horizontal: 16.0, // Menambahkan spasi horizontal
+                                  horizontal: 16.0,
                                 ),
                                 padding: EdgeInsets.all(8.0),
                                 decoration: BoxDecoration(
@@ -122,10 +96,10 @@ class _CustomerScreenState extends State<CustomerScreen> with WidgetsBindingObse
                                       Container(
                                         margin: EdgeInsets.only(right: 8.0),
                                         child: Image.network(
-                                          Uri.parse('${Endpoints.baseURL}/public/${item.imageUrl!}').toString(),
+                                          Uri.parse('${Endpoints.baseURL}/public/${item.imageUrl!}')
+                                              .toString(),
                                           width: 100,
-                                          errorBuilder: (context, error, stackTrace) =>
-                                              const Icon(Icons.error),
+                                          errorBuilder: (context, error, stackTrace) => const Icon(Icons.error),
                                         ),
                                       ),
                                     Expanded(
@@ -179,7 +153,7 @@ class _CustomerScreenState extends State<CustomerScreen> with WidgetsBindingObse
                                                         description: item.descriptionIssues,
                                                         rating: item.rating,
                                                         selectedPriority: Priority(priorityName: item.priority),
-                                                        selectedDepartment: Division(divisionDepartmentName:item.department),
+                                                        selectedDepartment: Division(divisionDepartmentName: item.department),
                                                         imageFile: item.imageUrl != null ? File(item.imageUrl!) : null,
                                                         onSave: (title, description, rating, selectedPriority, selectedDepartment, imageFile) {
                                                           setState(() {
@@ -223,8 +197,7 @@ class _CustomerScreenState extends State<CustomerScreen> with WidgetsBindingObse
                                                     },
                                                   );
                                                   if (confirm) {
-                                                    DataService.deleteCustomerService(item.idCustomerService)
-                                                        .then((_) {
+                                                    DataService.deleteCustomerService(item.idCustomerService).then((_) {
                                                       ScaffoldMessenger.of(context).showSnackBar(
                                                         SnackBar(
                                                           content: Text('Data successfully deleted'),

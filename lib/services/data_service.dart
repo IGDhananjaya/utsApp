@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:dhananjaya_2255011003/dto/cs.dart';
+import 'package:dhananjaya_2255011003/dto/division.dart';
+import 'package:dhananjaya_2255011003/dto/priorities.dart';
 import 'package:dhananjaya_2255011003/endpoints/endpoints.dart';
 import 'package:http/http.dart' as http;
 
@@ -28,6 +30,32 @@ class DataService {
       final data = jsonDecode(response.body) as Map<String, dynamic>;
       return (data['datas'] as List<dynamic>)
           .map((item) => CustomerService.fromJson(item as Map<String, dynamic>))
+          .toList();
+    } else {
+      // Ketika data gagal diinput
+      throw Exception('Failed to load data');
+    }
+  }
+
+  static Future<List<Priority>> fetchPriority() async {
+    final response = await http.get(Uri.parse(Endpoints.priority));
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      return (data['datas'] as List<dynamic>)
+          .map((item) => Priority.fromJson(item as Map<String, dynamic>))
+          .toList();
+    } else {
+      // Ketika data gagal diinput
+      throw Exception('Failed to load data');
+    }
+  }
+
+  static Future<List<Division>> fetchDivision() async {
+    final response = await http.get(Uri.parse(Endpoints.division));
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      return (data['datas'] as List<dynamic>)
+          .map((item) => Division.fromJson(item as Map<String, dynamic>))
           .toList();
     } else {
       // Ketika data gagal diinput

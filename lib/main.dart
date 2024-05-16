@@ -18,10 +18,6 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: CustomerScreen(),
-      // routes: {
-      //   '/front_page': (context) => frontpage(),
-      //   '/second_screen': (context) => SecondScreen(),
-      // },
     );
   }
 }
